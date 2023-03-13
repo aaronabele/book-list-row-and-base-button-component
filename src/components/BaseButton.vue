@@ -1,5 +1,7 @@
 <template>
-  <button>{{ btnName }}</button>
+  <button class="btn btn--secondary btn--secondary:hover">
+    {{ btnName }}
+  </button>
 </template>
 
 <script>
@@ -9,4 +11,38 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+:root {
+  --primary: purple;
+  --primary-dark: rgb(45, 0, 45);
+}
+
+.btn {
+  border: 3px solid transparent;
+  border-radius: 3px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.btn--primary {
+  border-color: var(--primary-dark);
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  border-color: var(--primary);
+  background-color: var(--primary-dark);
+}
+
+.btn--secondary {
+  border-color: var(--primary);
+  background-color: transparent;
+  color: var(--primary);
+}
+
+.btn--secondary:hover {
+  background-color: var(--primary);
+  color: #fff;
+}
+</style>
