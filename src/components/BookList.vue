@@ -8,13 +8,18 @@
       <th class="table--secondary general-padding">Interested?</th>
     </thead>
     <tbody>
-      <tr v-for="book in books" :key="book.isbn">
+      <tr v-for="(book, index) in books" :key="book.isbn">
         <td class="general-padding">{{ book.name }}</td>
         <td class="table-site-border general-padding">{{ book.isbn }}</td>
         <td class="table-site-border general-padding">{{ book.price }}</td>
         <td class="table-site-border general-padding">{{ book.pages }}</td>
         <td class="table-site-border general-padding">
-          <BaseButton btnName="Add to Basket" />
+          <BaseButton
+            :checked="book.done"
+            btnName="Add to basket"
+            @changeName="handleChangingName(index)"
+            @click="handleState(index)"
+          />
         </td>
       </tr>
     </tbody>
@@ -31,6 +36,8 @@ export default {
   },
   data() {
     return {
+      isClicked: "Remove from Bookmark",
+      isNotClicked: "Add to Basekt",
       books: [
         {
           id: 1,
@@ -38,6 +45,7 @@ export default {
           isbn: 9781484265888,
           price: "$10.10",
           pages: 110,
+          done: false,
         },
         {
           id: 2,
@@ -45,6 +53,7 @@ export default {
           isbn: 9781484265888,
           price: "$11.11",
           pages: 200,
+          done: false,
         },
         {
           id: 3,
@@ -52,6 +61,7 @@ export default {
           isbn: 9781491910290,
           price: "$22.22",
           pages: 510,
+          done: false,
         },
         {
           id: 4,
@@ -59,9 +69,22 @@ export default {
           isbn: 9781491912553,
           price: "$33.33",
           pages: 1100,
+          done: false,
         },
       ],
     };
+  },
+  methods: {
+    handleChangingName(index) {
+      if (this.books[index].done === true) {
+        console.log(this.isClicked);
+      } else {
+        console.log(this.isNotClicked);
+      }
+    },
+    handleState(index) {
+      this.books[index].done = !this.books[index].done;
+    },
   },
 };
 </script>

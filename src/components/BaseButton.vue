@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn--secondary btn--secondary:hover">
+  <button class="btn btn--secondary btn--secondary:hover" @click="changeName">
     {{ btnName }}
   </button>
 </template>
