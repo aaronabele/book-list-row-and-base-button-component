@@ -16,7 +16,7 @@
         <td class="table-site-border general-padding">
           <BaseButton
             :checked="book.done"
-            btnName="Add to basket"
+            v-bind:btnName="handleChangingName(index)"
             @changeName="handleChangingName(index)"
             @click="handleState(index)"
           />
@@ -36,8 +36,6 @@ export default {
   },
   data() {
     return {
-      isClicked: "Remove from Bookmark",
-      isNotClicked: "Add to Basekt",
       books: [
         {
           id: 1,
@@ -77,9 +75,9 @@ export default {
   methods: {
     handleChangingName(index) {
       if (this.books[index].done === true) {
-        console.log(this.isClicked);
+        return "Remove from Bookmark";
       } else {
-        console.log(this.isNotClicked);
+        return "Add to Basekt";
       }
     },
     handleState(index) {
