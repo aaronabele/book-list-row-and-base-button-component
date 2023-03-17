@@ -1,5 +1,8 @@
 <template>
-  <button class="btn btn--primary btn--primary:hover" @click="isBookmarked">
+  <button
+    class="btn btn--primary btn--primary:hover"
+    @click="$emit('btn-click')"
+  >
     <slot name="btn-slot"> </slot>
   </button>
 </template>
@@ -13,7 +16,7 @@ export default {
       validator: (value) => ["bg--primary", "bg--secondary"].includes(value),
     },
   },
-  emits: ["isBookmarked"],
+  emits: ["btn-click"],
 };
 </script>
 
