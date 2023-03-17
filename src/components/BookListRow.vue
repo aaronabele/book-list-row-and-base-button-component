@@ -1,27 +1,22 @@
 <template>
-  <h1 class="main-header-styling">{{ msg }}</h1>
-  <BookList />
+  <tr class="table-item__table">
+    <td>{{ title }}</td>
+    <td>{{ isbn }}</td>
+    <slot name="actionCol"> </slot>
+  </tr>
 </template>
 
 <script>
-import BookList from "./BookList.vue";
-
 export default {
-  name: "BookListRow",
-  components: {
-    BookList,
-  },
   props: {
-    msg: String,
+    title: String,
+    isbn: String,
   },
 };
 </script>
 
 <style>
-.main-header-styling {
-  width: 100%;
-  text-align: center;
-  font-size: 38px;
-  text-decoration: underline purple;
+.table-item__table td {
+  padding: 20px 15px;
 }
 </style>

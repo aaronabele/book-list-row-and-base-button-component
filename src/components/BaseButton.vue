@@ -1,26 +1,28 @@
 <template>
-  <button class="btn btn--secondary btn--secondary:hover" @click="changeName">
-    {{ btnName }}
+  <button class="btn btn--primary btn--primary:hover" @click="isBookmarked">
+    <slot name="btn-slot"> </slot>
   </button>
 </template>
 
 <script>
 export default {
-  name: "BaseButton",
-  props: ["btnName"],
+  props: {
+    text: String,
+    variant: {
+      default: "bg--primary",
+      validator: (value) => ["bg--primary", "bg--secondary"].includes(value),
+    },
+  },
+  emits: ["isBookmarked"],
 };
 </script>
 
 <style>
-:root {
-  --primary: purple;
-  --primary-dark: rgb(45, 0, 45);
-}
-
 .btn {
   border: 3px solid transparent;
   border-radius: 3px;
   padding: 5px;
+  margin-top: 10px;
   cursor: pointer;
 }
 

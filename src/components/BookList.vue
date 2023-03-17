@@ -1,115 +1,181 @@
 <template>
-  <table cellspacing="0">
-    <thead>
-      <th class="table--secondary general-padding">Name</th>
-      <th class="table--secondary general-padding">ISBN</th>
-      <th class="table--secondary general-padding">Price</th>
-      <th class="table--secondary general-padding">Pages</th>
-      <th class="table--secondary general-padding">Interested?</th>
-    </thead>
-    <tbody>
-      <tr v-for="(book, index) in books" :key="book.isbn">
-        <td class="general-padding">{{ book.name }}</td>
-        <td class="table-site-border general-padding">{{ book.isbn }}</td>
-        <td class="table-site-border general-padding">{{ book.price }}</td>
-        <td class="table-site-border general-padding">{{ book.pages }}</td>
-        <td class="table-site-border general-padding">
-          <BaseButton
-            :checked="book.done"
-            v-bind:btnName="handleChangingName(index)"
-            @changeName="handleChangingName(index)"
-            @click="handleState(index)"
-          />
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <section class="table-item">
+    <h2 class="table-item__hl">All Books</h2>
+    <table class="table-item__table">
+      <thead>
+        <tr>
+          <th class="table-item__table-head-name">Name</th>
+          <th class="table-item__table-head--isbn">ISBN</th>
+          <th class="th.table-item__table-head--action">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <BookListRow
+          v-for="(book, index) in books"
+          :key="book.isbn"
+          :title="book.title"
+          :isbn="book.isbn"
+          :checked="book.done"
+          @click="handleState(index)"
+        >
+          <template #actionCol
+            ><BaseButton variant="bg--primary">
+              <template #btn-slot>
+                <svg
+                  class="symbol"
+                  v-if="book.done === false"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 30 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <svg
+                  class="symbol"
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 30 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                {{ changename(index) }}
+              </template>
+            </BaseButton>
+          </template>
+        </BookListRow>
+      </tbody>
+    </table>
+  </section>
 </template>
 
 <script>
+import BookListRow from "@/components/BookListRow.vue";
 import BaseButton from "@/components/BaseButton.vue";
 
 export default {
-  name: "BookList",
   components: {
+    BookListRow,
     BaseButton,
   },
   data() {
     return {
       books: [
         {
-          id: 1,
-          name: "Practical Rust Web Projects",
-          isbn: 9781484265888,
-          price: "$10.10",
-          pages: 110,
+          title: "Practical Rust Web Projects",
+          isbn: "9781484265888",
+          author: "Shing Lyu",
+          publisher: "Apress",
+          price: "$28.75",
+          numPages: 256,
           done: false,
         },
         {
-          id: 2,
-          name: "Using WebPagetest",
-          isbn: 9781484265888,
-          price: "$11.11",
-          pages: 200,
+          title: "Using WebPagetest",
+          isbn: "9781491902592",
+          author: "Rick Viscomi, Andy Davies, Marcel Duran",
+          publisher: "O'Reilly Media",
+          price: "$25.80",
+          numPages: 214,
           done: false,
         },
         {
-          id: 3,
-          name: "Web Scraping with Python",
-          isbn: 9781491910290,
-          price: "$22.22",
-          pages: 510,
+          title: "Web Scraping with Python",
+          isbn: "9781491910290",
+          author: "Ryan Mitchell",
+          publisher: "O'Reilly Media",
+          price: "$14.00",
+          numPages: 256,
           done: false,
         },
         {
-          id: 4,
-          name: "High Performance Mobile Web",
-          isbn: 9781491912553,
-          price: "$33.33",
-          pages: 1100,
+          title: "High Performance Mobile Web",
+          isbn: "9781491912553",
+          author: "Maximiliano Firtman",
+          publisher: "O'Reilly Media",
+          price: "$7.00",
+          numPages: 326,
           done: false,
         },
       ],
     };
   },
   methods: {
-    handleChangingName(index) {
-      if (this.books[index].done === true) {
-        return "Remove from Bookmark";
-      } else {
-        return "Add to Basekt";
-      }
-    },
     handleState(index) {
       this.books[index].done = !this.books[index].done;
+    },
+    changename(index) {
+      return this.books[index].done ? "Remove Bookmark" : "Add Bookmark";
     },
   },
 };
 </script>
 
 <style>
-table {
-  margin-left: auto;
-  margin-right: auto;
+.table-item__table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+}
+.table-item__table-head-name {
+  width: 65%;
+}
+.table-item__table-head-isbn {
+  width: 20%;
+}
+.table-item__table-head-actions {
+  width: 15%;
+}
+.table-item__table-row button {
+  opacity: 1;
+  padding: 5px;
+  transition: opacity 500ms;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-:root {
-  --primary: purple;
-  --primary-dark: rgb(45, 0, 45);
+.table-item__table-row:hover button {
+  opacity: 1;
 }
-
-.general-padding {
-  padding: 5px 10px;
+.table-item__table thead tr {
+  background-color: var(--primary);
+  color: #ffffff;
+  text-align: left;
 }
-
-.table--secondary {
-  width: auto;
+.table-item__table th {
+  padding: 12px 15px;
+}
+.table-item__table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+.table-item__table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+.table-item__table tbody tr:last-of-type {
   border-bottom: 2px solid var(--primary);
-  background-color: transparent;
-  color: black;
+}
+.table-item__table tbody tr.active-row {
+  font-weight: bold;
+  color: var(--primary);
+}
+.table-item__hl {
+  margin-top: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--primary-dark);
 }
 
-.table-site-border {
-  border-left: 2px solid var(--primary);
+.symbol {
+  width: 20px;
+  height: auto;
 }
 </style>

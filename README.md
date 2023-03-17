@@ -1,4 +1,4 @@
-# booklist-row-base-button
+# booklist
 
 ## Project setup
 ```
